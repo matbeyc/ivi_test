@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  chocolate:
+    build:
+      context: ./app
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app:/main
+    networks:
+      - app-network
+
+  tests:
+    build:
+      context: ./test_framework
+    volumes:
+      - ./test_framework:/test_framework
+    networks:
+      - app-network
+    depends_on:
+      - chocolate
+networks:
+  app-network:
+    driver: bridge
